@@ -1,0 +1,193 @@
+\documentclass%%
+  [fontsize=11pt,%%          Schriftgroesse
+% Satzspiegel
+   paper=a4,%%               Papierformat
+   %enlargefirstpage=on,%%    Erste Seite anders
+   %pagenumber=headright,%%   Seitenzahl oben mittig  
+% Layout
+   headsepline=off,%%         Linie unter der Seitenzahl
+   parskip=half,%%           Abstand zwischen Absaetzen
+% Was kommt in den Briefkopf und in die Anschrift
+   fromalign=right,%%        Plazierung des Briefkopfs
+   fromphone=on,%%           Telefonnummer im Absender
+   fromrule=aftername,%%     Linie im Absender (aftername, afteraddress)
+   fromfax=off,%%            Faxnummer
+   fromemail=on,%%           Emailadresse
+   fromurl=off,%%            Homepage
+   fromlogo=on,%%            Firmenlogo
+   addrfield=on,%%           Adressfeld fuer Fensterkuverts
+   backaddress=on,%%         ...und Absender im Fenster
+   subject=beforeopening,%%  Plazierung der Betreffzeile
+   locfield=narrow,%%        zusaetzliches Feld fuer Absender
+   foldmarks=off,%%           Faltmarken setzen
+   numericaldate=off,%%      Datum numerisch ausgeben
+   refline=narrow,%%         Geschaeftszeile im Satzspiegel
+   firstfoot=on,%%           Footerbereich
+% Formatierung
+   draft=off%%                Entwurfsmodus
+]{scrlttr2}
+
+%---------------------------------------------------------------------------
+% Ende \documentclass
+%---------------------------------------------------------------------------
+\usepackage[ngerman]{babel}  
+\usepackage[hidelinks]{hyperref}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc} 
+% symbols: (cell)phone, email
+\RequirePackage{marvosym} 
+\RequirePackage{fontawesome}
+% for gray color in header
+\RequirePackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[babel]{microtype}
+\usepackage[top=2cm, bottom=0cm, left=2cm, right=2cm]{geometry}
+
+% Schriften werden hier definiert
+\renewcommand*\familydefault{\sfdefault} % Latin Modern Sans
+\setkomafont{fromname}{\sffamily\color{black}\LARGE}
+%\setkomafont{pagenumber}{\sffamily}
+\setkomafont{subject}{\mdseries}
+\setkomafont{backaddress}{\mdseries}
+\setkomafont{fromaddress}{\small\sffamily\mdseries\color{black}}
+
+\graphicspath{{../attachments/}}
+
+
+%---------------------------------------------------------------------------
+% Ende Präambel
+%---------------------------------------------------------------------------
+
+\begin{document}
+%---------------------------------------------------------------------------
+% Briefstil und Position des Briefkopfs
+\LoadLetterOption{DINmtext} %% DIN, DINmtext, SN, SNleft, KOMAold.
+\makeatletter
+\@setplength{sigbeforevskip}{0mm} % Abstand der Signatur von dem closing
+\@setplength{firstheadvpos}{15mm} % Abstand des Absenderfeldes vom Top
+\@setplength{firstheadhpos}{-20mm}
+\@setplength{firstfootvpos}{400mm} % Abstand des Footers von oben
+\@setplength{firstfoothpos}{0mm}
+\@setplength{firstheadwidth}{\textwidth} %\paperwidth
+\@setplength{firstfootwidth}{\textwidth}
+\@setplength{toaddrhpos}{20mm}
+\@setplength{toaddrvpos}{35mm}
+%\@setplength{refhpos}{25mm}
+\@setplength{locwidth}{70mm}   % Breite des Locationfeldes
+\@setplength{locvpos}{65mm}    % Abstand des Locationfeldes von oben
+\ifdim \useplength{toaddrhpos}>\z@
+  \@addtoplength[-6]{firstheadwidth}{\useplength{toaddrhpos}} %Linie Kopfzeile
+\else
+  \@addtoplength[2]{firstheadwidth}{\useplength{toaddrhpos}}
+\fi
+\@setplength{foldmarkhpos}{6.5mm}
+\makeatother
+
+% Seitenstil
+%pagenumber=footmiddle
+\pagestyle{plain}%% keine Header in der Kopfzeile bzw. plain
+\pagenumbering{arabic}
+
+% Farben werden hier definiert
+% define gray for header
+\definecolor{mygray}{gray}{.55}
+\definecolor{mygray}{gray}{.55}
+% define blue for address
+\definecolor{myblue}{rgb}{0.25,0.45,0.75}
+
+%---------------------------------------------------------------------------
+% DATENEINGABE
+%---------------------------------------------------------------------------
+% Absender Daten
+\setkomavar{fromname}{Max Mustermann}
+\setkomavar{fromaddress}{Musterstr. 1\\D--12345 Stuttgart}
+\setkomavar{fromphone}[\Mobilefone~]{+49\, 123 \,4567891}
+%\setkomavar{fromfax}[\FAX~]{+49\,(0)\,123\,456\,789\,1}
+\setkomavar{fromemail}[\Letter~]{max\_mustermann@outlook.com}
+%\setkomavar{fromurl}[]{http://ichunddu.de}
+%\setkomafont{fromaddress}{\small\rmfamily\mdseries\slshape\color{myblue}}
+
+\setkomavar{backaddressseparator}{ $\cdot$~}
+%\setkomavar{backaddressseparator}{ ~\textbullet~~}
+%\setkomavar{backaddress}{Maxi Muster, Musterhof 1, 45678 Berlin} % wenn erwünscht kann hier eine andere Backaddress eingetragen werden
+\setkomavar{signature}{Max Mustermann} 
+% signature same indention level as rest
+\renewcommand*{\raggedsignature}{\raggedright}
+%\setkomavar{location}{Referenz: 12345678}
+
+% Anlage neu definieren
+\renewcommand{\enclname}{Anlagen}
+\setkomavar{enclseparator}{: }
+
+% Bankverbindung
+%\setkomavar{frombank}{Kto. 123456789\\BLZ 123\,123\,12\\Musterbank}
+
+%\setkomavar{yourref}{123/H}
+%\setkomavar{yourmail}{}
+%\setkomavar{myref}{}
+%\setkomavar{customer}{}
+%\setkomavar{invoice}{}
+
+% Datum und Ort werden hier eingetragen
+\setkomavar{date}{01. Dezember 2016}
+\setkomavar{place}{Stuttgart}
+
+%---------------------------------------------------------------------------
+%\firstfoot{\footnotesize%
+%\rule[3pt]{\textwidth}{.4pt} \\
+%\begin{tabular}[t]{l@{}}% 
+%\usekomavar{fromname}\\
+%\usekomavar{fromaddress}\\
+%\end{tabular}%
+%\hfill
+%\begin{tabular}[t]{l@{}}%
+%  \usekomavar[\Mobilefone~]{fromphone}\\
+%   \usekomavar[\Letter~]{fromemail}\\
+%\end{tabular}%
+%\ifkomavarempty{frombank}{}{%
+%\hfill
+%\begin{tabular}[t]{l@{}}%
+%\usekomavar{frombank}
+%\end{tabular}%
+%}%
+%}% 
+
+%---------------------------------------------------------------------------
+% BRIEF
+%---------------------------------------------------------------------------
+% Hier beginnt der Brief, mit der Anschrift des Empfängers
+
+\begin{letter}
+{
+Die Muster GmbH\\
+Musterstr. 1\\
+12345 Stuttgart\\
+}
+
+% Der Betreff des Briefes
+\setkomavar{subject}{\textbf{Bewerbung um die ausgeschriebene Position \glqq Musteringenieur\grqq{}, Stellennummer: 158422}}
+
+\opening{Sehr geehrte Damen und Herren,}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   
+
+Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   
+
+
+Über ein persönliches Gespräch mit Ihnen würde ich mich sehr freuen.\newline
+
+Mit freundlichen Grüßen,\newline
+\includegraphics[height=1cm]{signature.png} \newline
+Max Mustermann
+
+%\closing{Mit freundlichen Grüßen}
+\end{letter}
+
+\end{document}
